@@ -1,0 +1,156 @@
+<?php
+define('DS_TARGET_MODULE', 'designssquare_com_theme_blocks');
+
+//remove any outer layout put by drupal
+function designssquare_com_theme_blocks_preprocess_block(&$vars, $hook){
+    switch($vars['block_html_id']){
+        case 'block-designssquare-com-theme-blocks-ds-blog-recent-posts':
+        case 'block-designssquare-com-theme-blocks-ds-about':
+        case 'block-designssquare-com-theme-blocks-ds-recent-tweets':
+        case 'block-designssquare-com-theme-blocks-ds-about-sidebar':
+        case 'block-designssquare-com-theme-blocks-ds-social':
+        case 'block-designssquare-com-theme-blocks-ds-blog-categories':
+        case 'block-designssquare-com-theme-blocks-ds-blog-archive':
+        case 'block-designssquare-com-theme-blocks-ds-portfolio-sidebar':
+        case 'block-designssquare-com-theme-blocks-ds-announcement':
+            $vars['theme_hook_suggestions'][] = 'block__no_wrap';
+            break;
+    }
+}
+
+/*****CREATING BLOCK********/
+function designssquare_com_theme_blocks_block_info()
+{
+
+    $blocks = array();
+    $blocks['ds_about'] = array(
+        'info' => t('DesignsSquare Theme: Block: About'), //admin ui block name
+        'properties' => array('administrative' => TRUE),
+    );
+    $blocks['ds_about_sidebar'] = array(
+        'info' => t('DesignsSquare Theme: Block: About - Sidebar'), //admin ui block name
+        'properties' => array('administrative' => TRUE),
+    );
+    $blocks['ds_copy_rights'] = array(
+        'info' => t('DesignsSquare Theme: Block: Copy Rights'), //admin ui block name
+        'properties' => array('administrative' => TRUE),
+    );
+    $blocks['ds_announcement'] = array(
+        'info' => t('DesignsSquare Theme: Block: Announcement'), //admin ui block name
+        'properties' => array('administrative' => TRUE),
+    );
+    $blocks['ds_portfolio'] = array(
+        'info' => t('DesignsSquare Theme: Block: Portfolio'), //admin ui block name
+        'properties' => array('administrative' => TRUE),
+    );
+    $blocks['ds_portfolio_sidebar'] = array(
+        'info' => t('DesignsSquare Theme: Block: Portfolio - Sidebar'), //admin ui block name
+        'properties' => array('administrative' => TRUE),
+    );
+    $blocks['ds_recent_tweets'] = array(
+        'info' => t('DesignsSquare Theme: Block: Recent Tweets'), //admin ui block name
+        'properties' => array('administrative' => TRUE),
+//        'cache' => DRUPAL_NO_CACHE,
+    );
+    $blocks['ds_blog_recent_posts'] = array(
+    'info' => t('DesignsSquare Theme: Block: Recent Posts'), //admin ui block name
+    'properties' => array('administrative' => TRUE),
+//        'cache' => DRUPAL_NO_CACHE,
+    );
+    $blocks['ds_blog_recent_posts_sidebar'] = array(
+        'info' => t('DesignsSquare Theme: Block: Recent Posts - Sidebar'), //admin ui block name
+        'properties' => array('administrative' => TRUE),
+//        'cache' => DRUPAL_NO_CACHE,
+    );
+    $blocks['ds_blog_categories'] = array(
+        'info' => t('DesignsSquare Theme: Block: Blog Categories'), //admin ui block name
+        'properties' => array('administrative' => TRUE),
+//        'cache' => DRUPAL_NO_CACHE,
+    );
+    $blocks['ds_blog_archive'] = array(
+        'info' => t('DesignsSquare Theme: Block: Blog Archive'), //admin ui block name
+        'properties' => array('administrative' => TRUE),
+//        'cache' => DRUPAL_NO_CACHE,
+    );
+    $blocks['ds_social'] = array(
+        'info' => t('DesignsSquare Theme: Block: Social'), //admin ui block name
+        'properties' => array('administrative' => TRUE),
+//        'cache' => DRUPAL_NO_CACHE,
+    );
+    return $blocks;
+}
+
+function designssquare_com_theme_blocks_block_view($delta = '')
+{
+    $block = array();
+
+    switch ($delta) {
+        case 'ds_about':
+        case 'ds_copy_rights':
+        case 'ds_announcement':
+        case 'ds_portfolio':
+        case 'ds_recent_tweets':
+        case 'ds_blog_recent_posts':
+        case 'ds_about_sidebar':
+        case 'ds_social':
+        case 'ds_blog_categories':
+        case 'ds_blog_archive':
+        case 'ds_portfolio_sidebar':
+        case 'ds_blog_recent_posts_sidebar':
+            $block['subject'] = t('');
+            $block['content'] = build_basic_block($delta);
+            break;
+    }
+
+    return $block;
+}
+
+function build_basic_block($delta)
+{
+    module_load_include('module', 'designssquare_lib');
+    $template_name = null;
+    $output = '';
+    switch ($delta) {
+        case 'ds_about':
+            $template_name = 'block--ds-about';
+            break;
+        case 'ds_copy_rights':
+            $template_name = 'block--ds-copy-rights';
+            break;
+        case 'ds_announcement':
+            $template_name = 'block--ds-announcement';
+            break;
+        case 'ds_portfolio':
+            $template_name = 'block--ds-portfolio';
+            break;
+        case 'ds_portfolio_sidebar':
+            $template_name = 'block--ds-portfolio-sidebar';
+            break;
+        case 'ds_recent_tweets':
+            $template_name = 'block--ds-recent-tweets';
+            break;
+        case 'ds_blog_recent_posts':
+            $template_name = 'block--ds-recent-posts';
+            break;
+        case 'ds_blog_recent_posts_sidebar':
+            $template_name = 'block--ds-recent-posts-sidebar';
+            break;
+        case 'ds_about_sidebar':
+            $template_name = 'block--ds-about-sidebar';
+            break;
+        case 'ds_social':
+            $template_name = 'block--ds-social';
+            break;
+        case 'ds_blog_categories':
+            $template_name = 'block--ds-blog-categories';
+            break;
+        case 'ds_blog_archive':
+            $template_name = 'block--ds-blog-archive';
+            break;
+    }
+
+    if(isset($template_name)){
+        $output .= theme_render_template(get_template_path(DS_TARGET_MODULE, $template_name) . '/blocks/'.$template_name.'.tpl.php', array());
+    }
+    return $output;
+}
