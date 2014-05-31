@@ -1,7 +1,6 @@
-<div class="col-sm-3 row-element">
-    <h3>Recent Tweet</h3>
-    <blockquote>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
-    </blockquote>
-    <p><a href="/" class="btn btn-info btn-mini"><strong>Follow me on Twitter</strong></a></p>
+<div class="col-sm-3 row-element contextual-links-region">
+    <?php print render($block_api['contextual_links']);?>
+    <h3><?php print $block_api['title']; ?></h3>
+    <?php print $block_api['content'];?>
+    <p><a href="<?php print $block_api['link_to_twitter']; ?>" class="btn btn-info btn-mini"><strong><?php print $block_api['button_text']; ?></strong></a></p>
 </div>
