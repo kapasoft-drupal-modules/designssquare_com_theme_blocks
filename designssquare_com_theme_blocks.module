@@ -161,7 +161,7 @@ function build_basic_block($delta)
     }
 
     if(isset($template_name)){
-        $output .= theme_render_template(get_template_path(DS_TARGET_MODULE, $template_name) . '/blocks/'.$template_name.'.tpl.php', $content_feed);
+        $output .= theme_render_template(get_template_path(DS_TARGET_MODULE, '/blocks/'.$template_name) . '/blocks/'.$template_name.'.tpl.php', $content_feed);
     }
     return $output;
 }
