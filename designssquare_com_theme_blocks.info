@@ -5,4 +5,4 @@ version = 0.1
 project = designssquare_com_theme_blocks
 package = DesignsSquare.com.theme
 
-;;dependencies[] = contact
+dependencies[] = designssquare_theme_block_plus_sample_data
