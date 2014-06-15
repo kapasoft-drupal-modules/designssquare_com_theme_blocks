@@ -5,7 +5,6 @@ define('MAX_SIZE_LIMIT_DS', (int)(ini_get('upload_max_filesize')));
 /*********General********/
 function ds_block_edit_form($form, &$form_submit){
 
-
     switch($form_submit['build_info']['args'][0]){
         case 'ds_social':
             $form += _social_block_form();
@@ -65,7 +64,6 @@ function ds_block_edit_form_submit($form, &$form_state) {
     drupal_set_message(t("Widget was updated successfully!"));
 }
 
-
 /******BLOCK - ABOUT ********/
 function _about_block_form()
 {
@@ -114,11 +112,19 @@ function _about_block_form_process($form_state){
             // Change status to permanent.
             $file->status = FILE_STATUS_PERMANENT;
             //all permanent files need an entry in the 'file_usage' table
-            file_usage_add($file, 'designssquare_com_theme_blocks', 'block', '1');
+            file_usage_add($file, 'designssquare_com_theme_blocks', 'ds_about__content_block__image', '1');
             // Save.
             file_save($file);
         }
 
+    }
+    //before setting  new file, lets ensure we remove previous from the file_managed, file_usage table
+    if($previous_fid = variable_get('ds_about__content_block__image', FALSE)){
+        if($file = file_load($previous_fid)){
+            file_delete($file);
+            file_usage_delete($file,'designssquare_com_theme_blocks');
+            file_unmanaged_delete($file->uri);
+        }
     }
     variable_set('ds_about__content_block__image', $form_state['values']['ds_about__content_block__image']);
     variable_set('ds_about__content_block__reference', $form_state['values']['ds_about__content_block__reference']);
@@ -133,7 +139,7 @@ function _about_block_feed()
     $reference_page = '/'.variable_get('ds_about__content_block__reference', '#');
     if(!empty($img_fid)){
        $file = file_load($img_fid);
-        $img_url = file_create_url($file->uri);
+        $img_url = (isset($file) && isset($file->uri)) ? file_create_url($file->uri) : '';
     }else{
         $img_url = '#';
     }
