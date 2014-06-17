@@ -5,4 +5,4 @@ version = 7.x-0.2-dev
 project = designssquare_com_theme_blocks
 package = DesignsSquare.com.theme
 
-;;dependencies[] = contact
+dependencies[] = designssquare_lib_assets
