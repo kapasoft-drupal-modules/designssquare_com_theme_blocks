@@ -1,7 +1,7 @@
 name = DesignsSquare.com Theme Blocks Plus
 description = common blocks that are shared for the themes
 core = 7.x
-version = 0.1
+version = 7.x-0.1
 project = designssquare_com_theme_blocks
 package = DesignsSquare.com.theme
 
