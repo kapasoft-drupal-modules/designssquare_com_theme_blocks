@@ -13,7 +13,7 @@ function designssquare_theme_block_plus_sample_data_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->asset = array(
+  $strongarm->file = array(
     0 => '',
   );
   $strongarm->name = 'ds_about__content_block__content';
@@ -23,26 +23,26 @@ function designssquare_theme_block_plus_sample_data_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->asset = array(
-    'fid' => '55',
+  $strongarm->file = array(
+    'fid' => '56',
     'uid' => '1',
-    'filename' => 'bio-lg.jpg',
-    'uri' => 'public://designssquare_com_theme_blocks/assets/img/bio-lg_2.jpg',
+    'filename' => 'bio.jpg',
+    'uri' => 'public://designssquare_com_theme_blocks/assets/img/bio.jpg',
     'filemime' => 'image/jpeg',
-    'filesize' => '209600',
+    'filesize' => '3993',
     'status' => '1',
-    'timestamp' => '1402831656',
-    'uuid' => '3aaddbb7-b2c4-414b-b011-8ba9621b36a8',
+    'timestamp' => '1402840043',
+    'uuid' => '64b4a691-5b53-428a-8809-7de009d9f70f',
     'rdf_mapping' => array(),
   );
   $strongarm->name = 'ds_about__content_block__image';
-  $strongarm->value = '55';
+  $strongarm->value = '56';
   $export['ds_about__content_block__image'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->asset = array(
+  $strongarm->file = array(
     0 => '',
   );
   $strongarm->name = 'ds_about__content_block__reference';
@@ -52,7 +52,7 @@ function designssquare_theme_block_plus_sample_data_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->asset = array(
+  $strongarm->file = array(
     0 => '',
   );
   $strongarm->name = 'ds_about__content_block__title';
@@ -62,7 +62,7 @@ function designssquare_theme_block_plus_sample_data_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->asset = array(
+  $strongarm->file = array(
     0 => '',
   );
   $strongarm->name = 'ds_announcement__content_block__content';
@@ -73,7 +73,7 @@ function designssquare_theme_block_plus_sample_data_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->asset = array(
+  $strongarm->file = array(
     0 => '',
   );
   $strongarm->name = 'ds_copy_rights__content_block__content';
@@ -83,7 +83,7 @@ function designssquare_theme_block_plus_sample_data_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->asset = array(
+  $strongarm->file = array(
     0 => '',
   );
   $strongarm->name = 'ds_recent_tweets__content_block__button_text';
@@ -93,7 +93,7 @@ function designssquare_theme_block_plus_sample_data_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->asset = array(
+  $strongarm->file = array(
     0 => '',
   );
   $strongarm->name = 'ds_recent_tweets__content_block__content';
@@ -105,7 +105,7 @@ function designssquare_theme_block_plus_sample_data_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->asset = array(
+  $strongarm->file = array(
     0 => '',
   );
   $strongarm->name = 'ds_recent_tweets__content_block__link';
@@ -115,7 +115,7 @@ function designssquare_theme_block_plus_sample_data_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->asset = array(
+  $strongarm->file = array(
     0 => '',
   );
   $strongarm->name = 'ds_recent_tweets__content_block__title';
@@ -125,7 +125,7 @@ function designssquare_theme_block_plus_sample_data_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->asset = array(
+  $strongarm->file = array(
     0 => '',
   );
   $strongarm->name = 'ds_social__content_block__content';
@@ -140,7 +140,7 @@ function designssquare_theme_block_plus_sample_data_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->asset = array(
+  $strongarm->file = array(
     0 => '',
   );
   $strongarm->name = 'ds_social__content_block__title';
