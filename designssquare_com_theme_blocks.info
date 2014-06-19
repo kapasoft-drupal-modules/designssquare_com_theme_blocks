@@ -5,4 +5,5 @@ version = 7.x-0.1
 project = designssquare_com_theme_blocks
 package = DesignsSquare.com.theme
 
-dependencies[] = designssquare_theme_block_plus_sample_data
+;dependencies[] = designssquare_theme_block_plus_sample_data
+dependencies[] = designssquare_lib_feature_assets
