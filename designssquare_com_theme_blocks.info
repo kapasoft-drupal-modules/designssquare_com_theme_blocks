@@ -7,3 +7,4 @@ package = DesignsSquare.com.theme
 
 dependencies[] = designssquare_theme_block_plus_sample_data
 dependencies[] = designssquare_lib_feature_assets
+dependencies[] = contextual

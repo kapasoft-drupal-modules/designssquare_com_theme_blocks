@@ -2,6 +2,9 @@
 define('MODULE_DEST', 'public://designssquare_com_theme_blocks/assets');
 define('MAX_SIZE_LIMIT_DS', (int)(ini_get('upload_max_filesize')));
 
+module_load_include('module', 'designssquare_lib');//include get_block_context api
+
+
 /*********General********/
 function ds_block_edit_form($form, &$form_submit){
 
@@ -24,6 +27,10 @@ function ds_block_edit_form($form, &$form_submit){
             break;
         case 'ds_recent_tweets':
             $form += _recent_tweets_block_form();
+            $form_title = 'Block Widget - Recent Tweets';
+            break;
+        case 'ds_blog_categories':
+            $form += _blog_categories_block_form();
             $form_title = 'Block Widget - Recent Tweets';
             break;
     }
@@ -59,6 +66,9 @@ function ds_block_edit_form_submit($form, &$form_state) {
         case 'ds_recent_tweets':
             _recent_tweets_block_form_process($form_state);
             break;
+        case 'ds_blog_categories':
+            _blog_categories_block_form_process($form_state);
+            break;
     }
 // Display a message upon successful submission.
     drupal_set_message(t("Widget was updated successfully!"));
@@ -74,7 +84,9 @@ function _about_block_form()
             '#default_value' => variable_get('ds_about__content_block__title', ''),
         ),
         'ds_about__content_block__content' => array(
-            '#type' => 'textarea',
+//            '#type' => 'textarea',
+            '#type' => 'text_format',
+            '#format' => 'full_html',
             '#rows' => '5',
             '#prefix' => t('Content'),
             '#default_value' => variable_get('ds_about__content_block__content', ''),
@@ -130,7 +142,7 @@ function _about_block_form_process($form_state){
     variable_set('ds_about__content_block__reference', $form_state['values']['ds_about__content_block__reference']);
 }
 
-function _about_block_feed()
+function _about_block_feed($block_id)
 {
 
     $title = variable_get('ds_about__content_block__title', '');
@@ -152,14 +164,27 @@ function _about_block_feed()
 
 
     global $user;
+
+    $block_api = array(
+        'title' => $title,
+        'content' => $content,
+        'image' => $img_url,
+        'ref_page' => $reference_page,
+        'contextual_links' => ($user->uid == 0) ? '' : $contextual_links['contextual_links']
+        );
+
+    switch($block_id){
+        case 'ds_about':
+            $context = get_block_context('ds_about');
+            break;
+        case 'ds_about_sidebar':
+            $context = get_block_context('ds_about_sidebar');
+            break;
+    }
+
     return array(
-        'block_api' => array(
-            'title' => $title,
-            'content' => $content,
-            'image' => $img_url,
-            'ref_page' => $reference_page,
-            'contextual_links' => ($user->uid == 0) ? '' : $contextual_links['contextual_links']
-        )
+        'block_api' => $block_api,
+        'context' => $context,
     );
 }
 
@@ -173,7 +198,9 @@ function _social_block_form()
             '#default_value' => variable_get('ds_social__content_block__title', ''),
         ),
         'ds_social__content_block__content' => array(
-            '#type' => 'textarea',
+//            '#type' => 'textarea',
+            '#type' => 'text_format',
+            '#format' => 'full_html',
             '#rows' => '5',
             '#prefix' => t('Content'),
 //            '#title' => t('Enter content for the block'),
@@ -213,7 +240,8 @@ function _social_block_feed()
             'title' => $title,
             'content' => $content,
             'contextual_links' => ($user->uid == 0) ? '' : $contextual_links['contextual_links']
-        )
+        ),
+        'context' => get_block_context('ds_social'),
     );
 }
 
@@ -222,21 +250,22 @@ function _copy_rights_block_form()
 {
     return array(
         'ds_copy_rights__content_block__content' => array(
-            '#type' => 'textarea',
+//            '#type' => 'textarea',
+            '#type' => 'text_format',
+            '#format' => 'full_html',
             '#rows' => '5',
             '#prefix' => t('Content'),
             '#default_value' => variable_get('ds_copy_rights__content_block__content', ''),
         ),
-
     );
 
 }
 
 function _copy_rights_block_form_process($form_state){
-    if($form_state['form_id'] == 'block_admin_configure'){
+    if(isset($form_state['form_id']) && $form_state['form_id'] == 'block_admin_configure'){
         variable_set('ds_copy_rights__content_block__content', $form_state['ds_copy_rights__content_block__content']);
     }else{
-        variable_set('ds_copy_rights__content_block__content', $form_state['values']['ds_copy_rights__content_block__content']);
+        variable_set('ds_copy_rights__content_block__content', $form_state['values']['ds_copy_rights__content_block__content']['value']);
     }
 }
 
@@ -257,7 +286,8 @@ function _copy_rights_block_feed()
         'block_api' => array(
             'content' => $content,
             'contextual_links' => ($user->uid == 0) ? '' : $contextual_links['contextual_links']
-        )
+        ),
+        'context' => get_block_context('ds_copy_rights'),
     );
 }
 
@@ -265,8 +295,15 @@ function _copy_rights_block_feed()
 function _announcement_block_form()
 {
     return array(
+        'ds_announcement__content_block__title' => array(
+            '#type' => 'textfield',
+            '#prefix' => t('Title'),
+            '#default_value' => variable_get('ds_announcement__content_block__title', ''),
+        ),
         'ds_announcement__content_block__content' => array(
-            '#type' => 'textarea',
+//            '#type' => 'textarea',
+            '#type' => 'text_format',
+            '#format' => 'full_html',
             '#rows' => '5',
             '#prefix' => t('Content'),
             '#default_value' => variable_get('ds_announcement__content_block__content', ''),
@@ -279,8 +316,10 @@ function _announcement_block_form()
 function _announcement_block_form_process($form_state){
     if($form_state['form_id'] == 'block_admin_configure'){
         variable_set('ds_announcement__content_block__content', $form_state['ds_announcement__content_block__content']);
+        variable_set('ds_announcement__content_block__title', $form_state['ds_announcement__content_block__title']);
     }else{
         variable_set('ds_announcement__content_block__content', $form_state['values']['ds_announcement__content_block__content']);
+        variable_set('ds_announcement__content_block__title', $form_state['values']['ds_announcement__content_block__title']);
     }
 }
 
@@ -288,6 +327,7 @@ function _announcement_block_feed()
 {
 
     $content = variable_get('ds_announcement__content_block__content', '');
+    $title = variable_get('ds_announcement__content_block__title', '');
 
     module_load_include('module', 'contextual');
     $contextual_links = contextual_element_info();
@@ -300,8 +340,10 @@ function _announcement_block_feed()
     return array(
         'block_api' => array(
             'content' => $content,
+            'title' => $title,
             'contextual_links' => ($user->uid == 0) ? '' : $contextual_links['contextual_links']
-        )
+        ),
+        'context' => get_block_context('ds_announcement'),
     );
 }
 
@@ -326,7 +368,9 @@ function _recent_tweets_block_form()
             '#default_value' => variable_get('ds_about__content_block__button_text', ''),
         ),
         'ds_recent_tweets__content_block__content' => array(
-            '#type' => 'textarea',
+//            '#type' => 'textarea',
+            '#type' => 'text_format',
+            '#format' => 'full_html',
             '#rows' => '5',
             '#prefix' => t('Content'),
             '#default_value' => variable_get('ds_recent_tweets__content_block__content', ''),
@@ -372,6 +416,84 @@ function _recent_tweets_block_feed()
             'button_text' => $button_text,
             'link_to_twitter' => $link_to_twitter,
             'contextual_links' => ($user->uid == 0) ? '' : $contextual_links['contextual_links']
-        )
+        ),
+        'context' => get_block_context('ds_recent_tweets'),
     );
 }
+
+/******BLOCK - Blog Categories**********/
+function _blog_categories_block_form()
+{
+    return array(
+        'ds_blog_categories__content_block__title' => array(
+            '#type' => 'textfield',
+            '#prefix' => t('Title'),
+            '#default_value' => variable_get('ds_blog_categories__content_block__title', ''),
+        ),
+        'ds_blog_categories__content_block__content' => array(
+//            '#type' => 'textarea',
+            '#type' => 'text_format',
+            '#format' => 'full_html',
+            '#rows' => '5',
+            '#prefix' => t('Content'),
+            '#default_value' => variable_get('ds_blog_categories__content_block__content', ''),
+        ),
+
+    );
+
+}
+
+function _blog_categories_block_form_process($form_state){
+    if(isset($form_state['form_id']) && ($form_state['form_id'] == 'block_admin_configure')){
+        variable_set('ds_blog_categories__content_block__title', $form_state['ds_blog_categories__content_block__title']);
+        variable_set('ds_blog_categories__content_block__content', $form_state['ds_blog_categories__content_block__content']);
+    }else{
+        variable_set('ds_blog_categories__content_block__title', $form_state['values']['ds_blog_categories__content_block__title']['value']);
+        variable_set('ds_blog_categories__content_block__content', $form_state['values']['ds_blog_categories__content_block__content']['value']);
+    }
+}
+
+function _blog_categories_block_feed()
+{
+    $title = variable_get('ds_blog_categories__content_block__title', '');
+    $content = variable_get('ds_blog_categories__content_block__content', '');
+
+    module_load_include('module', 'contextual');
+    $contextual_links = contextual_element_info();
+    $contextual_links['contextual_links']['#contextual_links'] = array(
+        'designssquare_com_theme_blocks' => array('designssquare-blocks', array('ds_blog_categories')),
+    );
+
+
+    global $user;
+    return array(
+        'block_api' => array(
+            'title' => $title,
+            'content' => $content,
+            'contextual_links' => ($user->uid == 0) ? '' : $contextual_links['contextual_links']
+        ),
+        'context' => get_block_context('ds_blog_categories'),
+    );
+}
+
+
+/*creates hook for other modules to pass in variables
+ *
+ *@param: id of the block
+ *
+ *@return: array of altered content
+*/
+//function get_block_context($block_id){
+//    $context = array();
+//
+//    //defaults
+//    $context['classes'] = '';//final list of classes
+//    $context['classes_array'] = array();//array of each class before combined into one string
+//    $context['classes_array'][] = 'contextual-links-region';
+//
+//    drupal_alter('ds_block_context', $context, $block_id);
+//
+//    //preprocess
+//    $context['classes'] = implode(' ', $context['classes_array'] );
+//    return $context;
+//}

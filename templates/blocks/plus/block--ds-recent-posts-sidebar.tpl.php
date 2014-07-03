@@ -1,4 +1,4 @@
-<div class="widget">
+<div class="<?php print $context['classes'];?>">
     <h3 class="widget-title">Recent Posts</h3>
     <ul class="nav">
         <li><a href="/">The Emerald City of Oz</a></li>

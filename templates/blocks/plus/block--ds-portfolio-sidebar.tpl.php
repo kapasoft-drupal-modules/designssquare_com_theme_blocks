@@ -1,4 +1,4 @@
-<div class="widget">
+<div class="<?php print $context['classes'];?>">
     <h3 class="widget-title">Portfolio</h3>
     <div class="row">
         <div class="col-sm-4">

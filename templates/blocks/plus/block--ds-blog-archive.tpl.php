@@ -1,4 +1,4 @@
-<div class="widget">
+<div class="<?php print $context['classes'];?>">
     <h3 class="widget-title">Archives</h3>
     <ul class="nav">
         <li><a href="archives.html"><span class="glyphicon glyphicon-calendar"></span> 2007</a></li>

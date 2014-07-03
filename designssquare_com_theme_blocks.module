@@ -16,6 +16,7 @@ function designssquare_com_theme_blocks_preprocess_block(&$vars, $hook){
         case 'block-designssquare-com-theme-blocks-ds-announcement':
         case 'block-designssquare-com-theme-blocks-ds-copy-rights':
         case 'block-designssquare-com-theme-blocks-ds-about':
+        case 'block-designssquare-com-theme-blocks-ds-blog-recent-posts-sidebar':
             $vars['theme_hook_suggestions'][] = 'block__no_wrap';
             break;
     }
@@ -118,11 +119,11 @@ function build_basic_block($delta)
     switch ($delta) {
         case 'ds_about':
             $template_name = 'plus/block--ds-about';
-            $content_feed = _about_block_feed();
+            $content_feed = _about_block_feed('ds_about');
             break;
         case 'ds_about_sidebar':
             $template_name = 'plus/block--ds-about-sidebar';
-            $content_feed = _about_block_feed();
+            $content_feed = _about_block_feed('ds_about_sidebar');
             break;
         case 'ds_copy_rights':
             $template_name = 'plus/block--ds-copy-rights';
@@ -154,6 +155,7 @@ function build_basic_block($delta)
             break;
         case 'ds_blog_categories':
             $template_name = 'plus/block--ds-blog-categories';
+            $content_feed = _blog_categories_block_feed();
             break;
         case 'ds_blog_archive':
             $template_name = 'plus/block--ds-blog-archive';
@@ -187,6 +189,8 @@ function designssquare_com_theme_blocks_block_configure($delta='') {
             break;
         case 'ds_recent_tweets':
             $form = _recent_tweets_block_form();
+        case 'ds_blog_categories':
+            $form = _blog_categories_block_form();
     }
     return $form;
 }
@@ -209,6 +213,9 @@ function designssquare_com_theme_blocks_block_save($delta = '', $edit = array())
             break;
         case 'ds_recent_tweets':
             _recent_tweets_block_form_process($edit);
+            break;
+        case 'ds_blog_categories':
+            _blog_categories_block_form_process($edit);
             break;
     }
 }
@@ -282,4 +289,19 @@ function designssquare_com_theme_blocks_overlay_paths(){
         'designssquare-blocks/*/edit' => TRUE,
     );
     return $paths;
+}
+
+//hooke into block context to set attributes,etc
+function designssquare_com_theme_blocks_ds_block_context_alter(&$context, $block_id){
+    switch($block_id){
+        case 'ds_social':
+        case 'ds_recent_tweets':
+        case 'ds_about_sidebar' :
+        case 'ds_portfolio_sidebar':
+        case 'ds_blog_recent_posts_sidebar':
+        case 'ds_blog_categories':
+        case 'ds_blog_archive':
+            $context['classes_array'][] = 'widget';
+            break;
+    }
 }
