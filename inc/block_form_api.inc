@@ -235,7 +235,7 @@ function _social_block_form_process($form_state){
     }
 }
 
-function _social_block_feed()
+function _social_block_feed($block_id)
 {
 
     $title = variable_get('ds_social__content_block__title', '');
@@ -247,15 +247,27 @@ function _social_block_feed()
         'designssquare_com_theme_blocks' => array('designssquare-blocks', array('ds_social')),
     );
 
-
+    //generate block_api
     global $user;
+    $block_api = array(
+        'title' => $title,
+        'content' => $content,
+        'contextual_links' => ($user->uid == 0) ? '' : $contextual_links['contextual_links']
+    );
+
+    //generate block context based on block_id
+    switch($block_id){
+        case 'ds_social':
+            $context = get_block_context('ds_social');
+            break;
+        case 'ds_social_sidebar':
+            $context = get_block_context('ds_social_sidebar');
+            break;
+    }
+
     return array(
-        'block_api' => array(
-            'title' => $title,
-            'content' => $content,
-            'contextual_links' => ($user->uid == 0) ? '' : $contextual_links['contextual_links']
-        ),
-        'context' => get_block_context('ds_social'),
+        'block_api' => $block_api,
+        'context' => $context,
     );
 }
 
@@ -554,7 +566,7 @@ function _blog_recent_posts_block_form()
             '#prefix' => t('Title'),
             '#default_value' => variable_get('ds_blog_recent_posts_sidebar__content_block__title', ''),
         ),
-        'ds_blog_recent_posts_sidebar__content_block__content' => array(
+        'ds_blog_archive__content_block__content' => array(
             '#type' => 'text_format',
             '#format' => 'full_html',
             '#rows' => '5',

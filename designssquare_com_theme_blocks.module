@@ -10,6 +10,7 @@ function designssquare_com_theme_blocks_preprocess_block(&$vars, $hook){
         case 'block-designssquare-com-theme-blocks-ds-recent-tweets':
         case 'block-designssquare-com-theme-blocks-ds-about-sidebar':
         case 'block-designssquare-com-theme-blocks-ds-social':
+        case 'block-designssquare-com-theme-blocks-ds-social_sidebar':
         case 'block-designssquare-com-theme-blocks-ds-blog-categories':
         case 'block-designssquare-com-theme-blocks-ds-blog-archive':
         case 'block-designssquare-com-theme-blocks-ds-portfolio-sidebar':
@@ -81,6 +82,11 @@ function designssquare_com_theme_blocks_block_info()
         'properties' => array('administrative' => TRUE),
 //        'cache' => DRUPAL_NO_CACHE,
     );
+    $blocks['ds_social_sidebar'] = array(
+        'info' => t('DesignsSquare Theme: Block: Social Sidebar'), //admin ui block name
+        'properties' => array('administrative' => TRUE),
+//        'cache' => DRUPAL_NO_CACHE,
+    );
     return $blocks;
 }
 
@@ -97,6 +103,7 @@ function designssquare_com_theme_blocks_block_view($delta = '')
         case 'ds_blog_recent_posts':
         case 'ds_about_sidebar':
         case 'ds_social':
+        case 'ds_social_sidebar':
         case 'ds_blog_categories':
         case 'ds_blog_archive':
         case 'ds_portfolio_sidebar':
@@ -146,14 +153,13 @@ function build_basic_block($delta)
         case 'ds_blog_recent_posts':
             $template_name = 'plus/block--ds-recent-posts';
             break;
-        case 'ds_blog_recent_posts_sidebar':
-            $template_name = 'plus/block--ds-recent-posts-sidebar';
-            $content_feed = _blog_recent_posts_block_feed();
-            break;
-            break;
         case 'ds_social':
             $template_name = 'plus/block--ds-social';
-            $content_feed = _social_block_feed();
+            $content_feed = _social_block_feed('ds_social');
+            break;
+        case 'ds_social_sidebar':
+            $template_name = 'plus/block--ds-social';
+            $content_feed = _social_block_feed('ds_social_sidebar');
             break;
         case 'ds_blog_categories':
             $template_name = 'plus/block--ds-blog-categories';
@@ -163,7 +169,10 @@ function build_basic_block($delta)
             $template_name = 'plus/block--ds-blog-archive';
             $content_feed = _blog_archive_block_feed();
             break;
-
+        case 'ds_blog_recent_posts_sidebar':
+            $template_name = 'plus/block--ds-recent-posts-sidebar';
+            $content_feed = _blog_recent_posts_block_feed();
+            break;
     }
 
     if(isset($template_name)){
@@ -183,6 +192,7 @@ function designssquare_com_theme_blocks_block_configure($delta='') {
             $form = _about_block_form();
             break;
         case 'ds_social' :
+        case 'ds_social_sidebar' :
             $form = _social_block_form();
             break;
         case 'ds_copy_rights' :
@@ -215,6 +225,7 @@ function designssquare_com_theme_blocks_block_save($delta = '', $edit = array())
             _about_block_form_process($edit);
             break;
         case 'ds_social' :
+        case 'ds_social_sidebar' :
             _social_block_form_process($edit);
             break;
         case 'ds_copy_rights' :
@@ -247,6 +258,7 @@ function designssquare_com_theme_blocks_form_alter(&$form, &$form_state, $form_i
         case 'block-designssquare-com-theme-blocks-ds-about':
             $form[] = _about_block_form();
             break;
+        case 'block-designssquare-com-theme-blocks-ds-social-sidebar':
         case 'block-designssquare-com-theme-blocks-ds-social':
             $form[] = _social_block_form();
             break;
@@ -312,7 +324,7 @@ function designssquare_com_theme_blocks_overlay_paths(){
 //hooke into block context to set attributes,etc
 function designssquare_com_theme_blocks_ds_block_context_alter(&$context, $block_id){
     switch($block_id){
-        case 'ds_social':
+        case 'ds_social_sidebar':
         case 'ds_recent_tweets':
         case 'ds_about_sidebar' :
         case 'ds_portfolio_sidebar':

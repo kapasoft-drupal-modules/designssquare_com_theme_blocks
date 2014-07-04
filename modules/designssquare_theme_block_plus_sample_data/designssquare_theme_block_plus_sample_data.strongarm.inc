@@ -76,6 +76,84 @@ function designssquare_theme_block_plus_sample_data_strongarm() {
   $strongarm->file = array(
     0 => '',
   );
+  $strongarm->name = 'ds_blog_archive__content_block__content';
+  $strongarm->value = '    <ul class="nav">
+        <li><a href="archives.html"><span class="glyphicon glyphicon-calendar"></span> 2007</a></li>
+        <li><a href="archives.html"><span class="glyphicon glyphicon-calendar"></span> 2008</a></li>
+        <li><a href="archives.html"><span class="glyphicon glyphicon-calendar"></span> 2009</a></li>
+        <li><a href="archives.html"><span class="glyphicon glyphicon-calendar"></span> 2010</a></li>
+        <li><a href="archives.html"><span class="glyphicon glyphicon-calendar"></span> 2011</a></li>
+        <li><a href="archives.html"><span class="glyphicon glyphicon-calendar"></span> 2012</a></li>
+    </ul>';
+  $export['ds_blog_archive__content_block__content'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->file = array(
+    0 => '',
+  );
+  $strongarm->name = 'ds_blog_archive__content_block__title';
+  $strongarm->value = 'Archive';
+  $export['ds_blog_archive__content_block__title'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->file = array(
+    0 => '',
+  );
+  $strongarm->name = 'ds_blog_categories__content_block__content';
+  $strongarm->value = '<ul class="nav">
+	<li><a href="categories.html"><span class="glyphicon glyphicon-list"></span> Books</a></li>
+	<li><a href="categories.html"><span class="glyphicon glyphicon-list"></span> Travel</a></li>
+	<li><a href="categories.html"><span class="glyphicon glyphicon-list"></span> Portfolio</a></li>
+	<li><a href="categories.html"><span class="glyphicon glyphicon-list"></span> Music</a></li>
+</ul>
+';
+  $export['ds_blog_categories__content_block__content'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->file = array(
+    0 => '',
+  );
+  $strongarm->name = 'ds_blog_categories__content_block__title';
+  $strongarm->value = 'Categories';
+  $export['ds_blog_categories__content_block__title'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->file = array(
+    0 => '',
+  );
+  $strongarm->name = 'ds_blog_recent_posts_sidebar__content_block__content';
+  $strongarm->value = '<ul class="nav">
+	<li><a href="/"><span class="glyphicon glyphicon-folder-close"></span> The Emerald City of Oz</a></li>
+	<li><a href="/"><span class="glyphicon glyphicon-folder-close"></span> Yellow Brick Road</a></li>
+	<li><a href="/"><span class="glyphicon glyphicon-folder-close"></span> Somewhere Over The Rainbow</a></li>
+</ul>
+';
+  $export['ds_blog_recent_posts_sidebar__content_block__content'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->file = array(
+    0 => '',
+  );
+  $strongarm->name = 'ds_blog_recent_posts_sidebar__content_block__title';
+  $strongarm->value = 'Recent Posts';
+  $export['ds_blog_recent_posts_sidebar__content_block__title'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->file = array(
+    0 => '',
+  );
   $strongarm->name = 'ds_copy_rights__content_block__content';
   $strongarm->value = '<p>&copy; Copyright Espresso Theme</p>';
   $export['ds_copy_rights__content_block__content'] = $strongarm;
