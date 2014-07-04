@@ -31,7 +31,15 @@ function ds_block_edit_form($form, &$form_submit){
             break;
         case 'ds_blog_categories':
             $form += _blog_categories_block_form();
-            $form_title = 'Block Widget - Recent Tweets';
+            $form_title = 'Block Widget - Categories';
+            break;
+        case 'ds_blog_archive':
+            $form += _blog_archive_block_form();
+            $form_title = 'Block Widget - Archive';
+            break;
+        case 'ds_blog_recent_posts_sidebar':
+            $form += _blog_recent_posts_block_form();
+            $form_title = 'Block Widget - Recent Posts';
             break;
     }
 
@@ -68,6 +76,12 @@ function ds_block_edit_form_submit($form, &$form_state) {
             break;
         case 'ds_blog_categories':
             _blog_categories_block_form_process($form_state);
+            break;
+        case 'ds_blog_archive':
+            _blog_archive_block_form_process($form_state);
+            break;
+        case 'ds_blog_recent_posts_sidebar':
+            _blog_recent_posts_block_form_process($form_state);
             break;
     }
 // Display a message upon successful submission.
@@ -431,7 +445,6 @@ function _blog_categories_block_form()
             '#default_value' => variable_get('ds_blog_categories__content_block__title', ''),
         ),
         'ds_blog_categories__content_block__content' => array(
-//            '#type' => 'textarea',
             '#type' => 'text_format',
             '#format' => 'full_html',
             '#rows' => '5',
@@ -448,7 +461,7 @@ function _blog_categories_block_form_process($form_state){
         variable_set('ds_blog_categories__content_block__title', $form_state['ds_blog_categories__content_block__title']);
         variable_set('ds_blog_categories__content_block__content', $form_state['ds_blog_categories__content_block__content']);
     }else{
-        variable_set('ds_blog_categories__content_block__title', $form_state['values']['ds_blog_categories__content_block__title']['value']);
+        variable_set('ds_blog_categories__content_block__title', $form_state['values']['ds_blog_categories__content_block__title']);
         variable_set('ds_blog_categories__content_block__content', $form_state['values']['ds_blog_categories__content_block__content']['value']);
     }
 }
@@ -476,6 +489,115 @@ function _blog_categories_block_feed()
     );
 }
 
+
+/******BLOCK - Blog Archive**********/
+function _blog_archive_block_form()
+{
+    return array(
+        'ds_blog_archive__content_block__title' => array(
+            '#type' => 'textfield',
+            '#prefix' => t('Title'),
+            '#default_value' => variable_get('ds_blog_archive__content_block__title', ''),
+        ),
+        'ds_blog_archive__content_block__content' => array(
+            '#type' => 'text_format',
+            '#format' => 'full_html',
+            '#rows' => '5',
+            '#prefix' => t('Content'),
+            '#default_value' => variable_get('ds_blog_archive__content_block__content', ''),
+        ),
+
+    );
+
+}
+
+function _blog_archive_block_form_process($form_state){
+    if(isset($form_state['form_id']) && ($form_state['form_id'] == 'block_admin_configure')){
+        variable_set('ds_blog_archive__content_block__title', $form_state['ds_blog_archive__content_block__title']);
+        variable_set('ds_blog_archive__content_block__content', $form_state['ds_blog_archive__content_block__content']);
+    }else{
+        variable_set('ds_blog_archive__content_block__title', $form_state['values']['ds_blog_archive__content_block__title']);
+        variable_set('ds_blog_archive__content_block__content', $form_state['values']['ds_blog_archive__content_block__content']['value']);
+    }
+}
+
+function _blog_archive_block_feed()
+{
+    $title = variable_get('ds_blog_archive__content_block__title', '');
+    $content = variable_get('ds_blog_archive__content_block__content', '');
+
+    module_load_include('module', 'contextual');
+    $contextual_links = contextual_element_info();
+    $contextual_links['contextual_links']['#contextual_links'] = array(
+        'designssquare_com_theme_blocks' => array('designssquare-blocks', array('ds_blog_archive')),
+    );
+
+
+    global $user;
+    return array(
+        'block_api' => array(
+            'title' => $title,
+            'content' => $content,
+            'contextual_links' => ($user->uid == 0) ? '' : $contextual_links['contextual_links']
+        ),
+        'context' => get_block_context('ds_blog_archive'),
+    );
+}
+
+
+/******BLOCK - Recent Posts**********/
+function _blog_recent_posts_block_form()
+{
+    return array(
+        'ds_blog_recent_posts_sidebar__content_block__title' => array(
+            '#type' => 'textfield',
+            '#prefix' => t('Title'),
+            '#default_value' => variable_get('ds_blog_recent_posts_sidebar__content_block__title', ''),
+        ),
+        'ds_blog_recent_posts_sidebar__content_block__content' => array(
+            '#type' => 'text_format',
+            '#format' => 'full_html',
+            '#rows' => '5',
+            '#prefix' => t('Content'),
+            '#default_value' => variable_get('ds_blog_recent_posts_sidebar__content_block__content', ''),
+        ),
+
+    );
+
+}
+
+function _blog_recent_posts_block_form_process($form_state){
+    if(isset($form_state['form_id']) && ($form_state['form_id'] == 'block_admin_configure')){
+        variable_set('ds_blog_recent_posts_sidebar__content_block__title', $form_state['ds_blog_recent_posts_sidebar__content_block__title']);
+        variable_set('ds_blog_recent_posts_sidebar__content_block__content', $form_state['ds_blog_recent_posts_sidebar__content_block__content']);
+    }else{
+        variable_set('ds_blog_recent_posts_sidebar__content_block__title', $form_state['values']['ds_blog_recent_posts_sidebar__content_block__title']);
+        variable_set('ds_blog_recent_posts_sidebar__content_block__content', $form_state['values']['ds_blog_recent_posts_sidebar__content_block__content']['value']);
+    }
+}
+
+function _blog_recent_posts_block_feed()
+{
+    $title = variable_get('ds_blog_recent_posts_sidebar__content_block__title', '');
+    $content = variable_get('ds_blog_recent_posts_sidebar__content_block__content', '');
+
+    module_load_include('module', 'contextual');
+    $contextual_links = contextual_element_info();
+    $contextual_links['contextual_links']['#contextual_links'] = array(
+        'designssquare_com_theme_blocks' => array('designssquare-blocks', array('ds_blog_recent_posts_sidebar')),
+    );
+
+
+    global $user;
+    return array(
+        'block_api' => array(
+            'title' => $title,
+            'content' => $content,
+            'contextual_links' => ($user->uid == 0) ? '' : $contextual_links['contextual_links']
+        ),
+        'context' => get_block_context('ds_blog_recent_posts_sidebar'),
+    );
+}
 
 /*creates hook for other modules to pass in variables
  *

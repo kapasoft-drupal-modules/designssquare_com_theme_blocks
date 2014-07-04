@@ -148,6 +148,8 @@ function build_basic_block($delta)
             break;
         case 'ds_blog_recent_posts_sidebar':
             $template_name = 'plus/block--ds-recent-posts-sidebar';
+            $content_feed = _blog_recent_posts_block_feed();
+            break;
             break;
         case 'ds_social':
             $template_name = 'plus/block--ds-social';
@@ -159,7 +161,9 @@ function build_basic_block($delta)
             break;
         case 'ds_blog_archive':
             $template_name = 'plus/block--ds-blog-archive';
+            $content_feed = _blog_archive_block_feed();
             break;
+
     }
 
     if(isset($template_name)){
@@ -189,8 +193,16 @@ function designssquare_com_theme_blocks_block_configure($delta='') {
             break;
         case 'ds_recent_tweets':
             $form = _recent_tweets_block_form();
+            break;
         case 'ds_blog_categories':
             $form = _blog_categories_block_form();
+            break;
+        case 'ds_blog_archive':
+            $form = _blog_archive_block_form();
+            break;
+        case 'ds_blog_recent_posts_sidebar':
+            $form = _blog_recent_posts_block_form();
+            break;
     }
     return $form;
 }
@@ -216,6 +228,12 @@ function designssquare_com_theme_blocks_block_save($delta = '', $edit = array())
             break;
         case 'ds_blog_categories':
             _blog_categories_block_form_process($edit);
+            break;
+        case 'ds_archive_categories':
+            _blog_archive_block_form_process($edit);
+            break;
+        case 'ds_blog_recent_posts_sidebar':
+            _blog_recent_posts_block_form_process($edit);
             break;
     }
 }
