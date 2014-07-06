@@ -128,7 +128,7 @@ function _about_block_form()
 
 function _about_block_form_process($form_state){
     variable_set('ds_about__content_block__title', $form_state['values']['ds_about__content_block__title']);
-    variable_set('ds_about__content_block__content', $form_state['values']['ds_about__content_block__content']);
+    variable_set('ds_about__content_block__content', $form_state['values']['ds_about__content_block__content']['value']);
 
     //make file permanent
     if(is_numeric($form_state['values']['ds_about__content_block__image']) && $form_state['values']['ds_about__content_block__image'] > 0){
@@ -147,8 +147,8 @@ function _about_block_form_process($form_state){
     //before setting  new file, lets ensure we remove previous from the file_managed, file_usage table
     if($previous_fid = variable_get('ds_about__content_block__image', FALSE)){
         if($file = file_load($previous_fid)){
-            file_delete($file);
             file_usage_delete($file,'designssquare_com_theme_blocks');
+            file_delete($file);
             file_unmanaged_delete($file->uri);
         }
     }
@@ -231,7 +231,7 @@ function _social_block_form_process($form_state){
         variable_set('ds_social__content_block__content', $form_state['ds_social__content_block__content']);
     }else{
         variable_set('ds_social__content_block__title', $form_state['values']['ds_social__content_block__title']);
-        variable_set('ds_social__content_block__content', $form_state['values']['ds_social__content_block__content']);
+        variable_set('ds_social__content_block__content', $form_state['values']['ds_social__content_block__content']['value']);
     }
 }
 
@@ -344,7 +344,7 @@ function _announcement_block_form_process($form_state){
         variable_set('ds_announcement__content_block__content', $form_state['ds_announcement__content_block__content']);
         variable_set('ds_announcement__content_block__title', $form_state['ds_announcement__content_block__title']);
     }else{
-        variable_set('ds_announcement__content_block__content', $form_state['values']['ds_announcement__content_block__content']);
+        variable_set('ds_announcement__content_block__content', $form_state['values']['ds_announcement__content_block__content']['value']);
         variable_set('ds_announcement__content_block__title', $form_state['values']['ds_announcement__content_block__title']);
     }
 }
@@ -407,16 +407,16 @@ function _recent_tweets_block_form()
 }
 
 function _recent_tweets_block_form_process($form_state){
-    if($form_state['form_id'] == 'block_admin_configure'){
+    if(isset($form_state['form_id']) && $form_state['form_id'] == 'block_admin_configure'){
         variable_set('ds_recent_tweets__content_block__title', $form_state['ds_recent_tweets__content_block__title']);
         variable_set('ds_recent_tweets__content_block__link', $form_state['ds_recent_tweets__content_block__link']);
         variable_set('ds_recent_tweets__content_block__button_text', $form_state['ds_recent_tweets__content_block__button_text']);
-        variable_set('ds_recent_tweets__content_block__content', $form_state['ds_recent_tweets__content_block__content']);
+        variable_set('ds_recent_tweets__content_block__content', $form_state['ds_recent_tweets__content_block__content']['value']);
     }else{
         variable_set('ds_recent_tweets__content_block__title', $form_state['values']['ds_recent_tweets__content_block__title']);
         variable_set('ds_recent_tweets__content_block__link', $form_state['values']['ds_recent_tweets__content_block__link']);
         variable_set('ds_recent_tweets__content_block__button_text', $form_state['values']['ds_recent_tweets__content_block__button_text']);
-        variable_set('ds_recent_tweets__content_block__content', $form_state['values']['ds_recent_tweets__content_block__content']);
+        variable_set('ds_recent_tweets__content_block__content', $form_state['values']['ds_recent_tweets__content_block__content']['value']);
     }
 }
 
