@@ -226,7 +226,7 @@ function _social_block_form()
 }
 
 function _social_block_form_process($form_state){
-    if($form_state['form_id'] == 'block_admin_configure'){
+    if(isset($form_state['form_id']) && $form_state['form_id'] == 'block_admin_configure'){
         variable_set('ds_social__content_block__title', $form_state['ds_social__content_block__title']);
         variable_set('ds_social__content_block__content', $form_state['ds_social__content_block__content']);
     }else{
@@ -631,3 +631,5 @@ function _blog_recent_posts_block_feed()
 //    $context['classes'] = implode(' ', $context['classes_array'] );
 //    return $context;
 //}
+
+
