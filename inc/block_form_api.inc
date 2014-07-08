@@ -122,6 +122,7 @@ function _about_block_form()
                 // Pass the maximum file size in bytes
                 'file_validate_size' => array(MAX_SIZE_LIMIT_DS*1024*1024),
             ),
+            '#process' => array('ds_designssquare_lib_process_file_managed'),
         )
     );
 }
@@ -131,27 +132,27 @@ function _about_block_form_process($form_state){
     variable_set('ds_about__content_block__content', $form_state['values']['ds_about__content_block__content']['value']);
 
     //make file permanent
-    if(is_numeric($form_state['values']['ds_about__content_block__image']) && $form_state['values']['ds_about__content_block__image'] > 0){
-        $file = file_load($form_state['values']['ds_about__content_block__image']);
-
-        if($file->status !== FILE_STATUS_PERMANENT){
-            // Change status to permanent.
-            $file->status = FILE_STATUS_PERMANENT;
-            //all permanent files need an entry in the 'file_usage' table
-            file_usage_add($file, 'designssquare_com_theme_blocks', 'ds_about__content_block__image', '1');
-            // Save.
-            file_save($file);
-        }
-
-    }
+//    if(is_numeric($form_state['values']['ds_about__content_block__image']) && $form_state['values']['ds_about__content_block__image'] > 0){
+//        $file = file_load($form_state['values']['ds_about__content_block__image']);
+//
+//        if($file->status !== FILE_STATUS_PERMANENT){
+//            // Change status to permanent.
+//            $file->status = FILE_STATUS_PERMANENT;
+//            //all permanent files need an entry in the 'file_usage' table
+//            file_usage_add($file, 'designssquare_com_theme_blocks', 'ds_about__content_block__image', '1');
+//            // Save.
+//            file_save($file);
+//        }
+//
+//    }
     //before setting  new file, lets ensure we remove previous from the file_managed, file_usage table
-    if($previous_fid = variable_get('ds_about__content_block__image', FALSE)){
-        if($file = file_load($previous_fid)){
-            file_usage_delete($file,'designssquare_com_theme_blocks');
-            file_delete($file);
-            file_unmanaged_delete($file->uri);
-        }
-    }
+//    if($previous_fid = variable_get('ds_about__content_block__image', FALSE)){
+//        if($file = file_load($previous_fid)){
+//            file_usage_delete($file,'designssquare_com_theme_blocks');
+//            file_delete($file);
+//            file_unmanaged_delete($file->uri);
+//        }
+//    }
     variable_set('ds_about__content_block__image', $form_state['values']['ds_about__content_block__image']);
     variable_set('ds_about__content_block__reference', $form_state['values']['ds_about__content_block__reference']);
 }
