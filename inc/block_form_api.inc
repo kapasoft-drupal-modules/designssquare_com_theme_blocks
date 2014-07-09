@@ -341,7 +341,7 @@ function _announcement_block_form()
 }
 
 function _announcement_block_form_process($form_state){
-    if($form_state['form_id'] == 'block_admin_configure'){
+    if(isset($form_state['form_id']) && $form_state['form_id'] == 'block_admin_configure'){
         variable_set('ds_announcement__content_block__content', $form_state['ds_announcement__content_block__content']);
         variable_set('ds_announcement__content_block__title', $form_state['ds_announcement__content_block__title']);
     }else{
@@ -392,7 +392,7 @@ function _recent_tweets_block_form()
         'ds_recent_tweets__content_block__button_text' => array(
             '#type' => 'textfield',
             '#prefix' => t('Button Text'),
-            '#default_value' => variable_get('ds_about__content_block__button_text', ''),
+            '#default_value' => variable_get('ds_about__content_block__button_text', t('Follow me on Twitter')),
         ),
         'ds_recent_tweets__content_block__content' => array(
 //            '#type' => 'textarea',
@@ -425,7 +425,7 @@ function _recent_tweets_block_feed()
 {
     $title = variable_get('ds_recent_tweets__content_block__title', '');
     $link_to_twitter = '/'.variable_get('ds_recent_tweets__content_block__link', '#');
-    $button_text = variable_get('ds_recent_tweets__content_block__button_text', '');
+    $button_text = variable_get('ds_recent_tweets__content_block__button_text', t('Follow me on Twitter'));
     $content = variable_get('ds_recent_tweets__content_block__content', '');
 
     module_load_include('module', 'contextual');
