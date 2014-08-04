@@ -32,8 +32,12 @@ function designssquare_com_theme_blocks_block_info()
         'info' => t('DesignsSquare Theme: Block: About'), //admin ui block name
         'properties' => array('administrative' => TRUE),
     );
-    $blocks['ds_about_sidebar'] = array(
-        'info' => t('DesignsSquare Theme: Block: About - Sidebar'), //admin ui block name
+    $blocks['ds_about_teaser'] = array(
+        'info' => t('DesignsSquare Theme: Block: About - Teaser'), //admin ui block name
+        'properties' => array('administrative' => TRUE),
+    );
+    $blocks['ds_contact_info'] = array(
+        'info' => t('DesignsSquare Theme: Block: Contact Info'), //admin ui block name
         'properties' => array('administrative' => TRUE),
     );
     $blocks['ds_copy_rights'] = array(
@@ -45,11 +49,11 @@ function designssquare_com_theme_blocks_block_info()
         'properties' => array('administrative' => TRUE),
     );
     $blocks['ds_portfolio'] = array(
-        'info' => t('DesignsSquare Theme: Block: Portfolio'), //admin ui block name
+        'info' => t('DesignsSquare Theme: Block: Portfolio - Teaser'), //admin ui block name
         'properties' => array('administrative' => TRUE),
     );
     $blocks['ds_portfolio_sidebar'] = array(
-        'info' => t('DesignsSquare Theme: Block: Portfolio - Sidebar'), //admin ui block name
+        'info' => t('DesignsSquare Theme: Block: Portfolio'), //admin ui block name
         'properties' => array('administrative' => TRUE),
     );
     $blocks['ds_recent_tweets'] = array(
@@ -58,12 +62,12 @@ function designssquare_com_theme_blocks_block_info()
 //        'cache' => DRUPAL_NO_CACHE,
     );
     $blocks['ds_blog_recent_posts'] = array(
-    'info' => t('DesignsSquare Theme: Block: Recent Posts'), //admin ui block name
+    'info' => t('DesignsSquare Theme: Block: Recent Posts - Teaser'), //admin ui block name
     'properties' => array('administrative' => TRUE),
 //        'cache' => DRUPAL_NO_CACHE,
     );
     $blocks['ds_blog_recent_posts_sidebar'] = array(
-        'info' => t('DesignsSquare Theme: Block: Recent Posts - Sidebar'), //admin ui block name
+        'info' => t('DesignsSquare Theme: Block: Recent Posts'), //admin ui block name
         'properties' => array('administrative' => TRUE),
 //        'cache' => DRUPAL_NO_CACHE,
     );
@@ -87,6 +91,16 @@ function designssquare_com_theme_blocks_block_info()
         'properties' => array('administrative' => TRUE),
 //        'cache' => DRUPAL_NO_CACHE,
     );
+    $blocks['ds_testimonial'] = array(
+        'info' => t('DesignsSquare Theme: Block: Testimonial'), //admin ui block name
+        'properties' => array('administrative' => TRUE),
+//        'cache' => DRUPAL_NO_CACHE,
+    );
+    $blocks['ds_testimonial_teaser'] = array(
+        'info' => t('DesignsSquare Theme: Block: Testimonial - Teaser'), //admin ui block name
+        'properties' => array('administrative' => TRUE),
+//        'cache' => DRUPAL_NO_CACHE,
+    );
     return $blocks;
 }
 
@@ -101,13 +115,16 @@ function designssquare_com_theme_blocks_block_view($delta = '')
         case 'ds_portfolio':
         case 'ds_recent_tweets':
         case 'ds_blog_recent_posts':
-        case 'ds_about_sidebar':
+        case 'ds_about_teaser':
         case 'ds_social':
         case 'ds_social_sidebar':
         case 'ds_blog_categories':
         case 'ds_blog_archive':
         case 'ds_portfolio_sidebar':
         case 'ds_blog_recent_posts_sidebar':
+        case 'ds_testimonial':
+        case 'ds_testimonial_teaser':
+        case 'ds_contact_info':
             $block['subject'] = t('');
             $block['content'] = build_basic_block($delta);
             break;
@@ -128,13 +145,17 @@ function build_basic_block($delta)
             $template_name = 'plus/block--ds-about';
             $content_feed = _about_block_feed('ds_about');
             break;
-        case 'ds_about_sidebar':
-            $template_name = 'plus/block--ds-about-sidebar';
-            $content_feed = _about_block_feed('ds_about_sidebar');
+        case 'ds_about_teaser':
+            $template_name = 'plus/block--ds-about-teaser';
+            $content_feed = _about_block_teaser_feed('ds_about_teaser');
             break;
         case 'ds_copy_rights':
             $template_name = 'plus/block--ds-copy-rights';
             $content_feed = _copy_rights_block_feed();
+            break;
+        case 'ds_contact_info':
+            $template_name = 'plus/block--ds-contact-info';
+            $content_feed = _contact_info_block_feed();
             break;
         case 'ds_announcement':
             $template_name = 'plus/block--ds-announcement';
@@ -173,10 +194,18 @@ function build_basic_block($delta)
             $template_name = 'plus/block--ds-recent-posts-sidebar';
             $content_feed = _blog_recent_posts_block_feed();
             break;
+        case 'ds_testimonial':
+            $template_name = 'plus/block--ds-testimonial';
+            $content_feed = _testimonial_block_feed('ds_testimonial');
+            break;
+        case 'ds_testimonial_teaser':
+            $template_name = 'plus/block--ds-testimonial-teaser';
+            $content_feed = _testimonial_block_feed('ds_testimonial_teaser');
+            break;
     }
 
     if(isset($template_name)){
-        $output .= theme_render_template(get_template_path(DS_TARGET_MODULE, '/blocks/'.$template_name) . '/blocks/'.$template_name.'.tpl.php', $content_feed);
+        $output .= theme_render_template(get_template_path(DS_TARGET_MODULE, '/designssquare-com-theme-blocks/'.$template_name) . '/designssquare-com-theme-blocks/'.$template_name.'.tpl.php', $content_feed);
     }
     return $output;
 }
@@ -187,7 +216,9 @@ function designssquare_com_theme_blocks_block_configure($delta='') {
 //    module_load_include('inc', 'designssquare_com_theme_blocks','inc/block_form_api');
     $form = array();
     switch($delta) {
-        case 'ds_about_sidebar' :
+        case 'ds_about_teaser' :
+            $form = _about_block_teaser_form();
+            break;
         case 'ds_about' :
             $form = _about_block_form();
             break;
@@ -197,6 +228,9 @@ function designssquare_com_theme_blocks_block_configure($delta='') {
             break;
         case 'ds_copy_rights' :
             $form = _copy_rights_block_form();
+            break;
+        case 'ds_contact_info' :
+            $form = _contact_info_block_form();
             break;
         case 'ds_announcement' :
             $form = _announcement_block_form();
@@ -213,6 +247,10 @@ function designssquare_com_theme_blocks_block_configure($delta='') {
         case 'ds_blog_recent_posts_sidebar':
             $form = _blog_recent_posts_block_form();
             break;
+        case 'ds_testimonial':
+        case 'ds_testimonial_teaser':
+            $form = _testimonial_block_form();
+            break;
     }
     return $form;
 }
@@ -220,7 +258,9 @@ function designssquare_com_theme_blocks_block_configure($delta='') {
 function designssquare_com_theme_blocks_block_save($delta = '', $edit = array()) {
 
     switch($delta) {
-        case 'ds_about_sidebar' :
+        case 'ds_about_teaser' :
+            _about_block_teaser_form_process($edit);
+            break;
         case 'ds_about' :
             _about_block_form_process($edit);
             break;
@@ -230,6 +270,9 @@ function designssquare_com_theme_blocks_block_save($delta = '', $edit = array())
             break;
         case 'ds_copy_rights' :
             _copy_rights_block_form_process($edit);
+            break;
+        case 'ds_contact_info' :
+            _contact_info_block_form_process($edit);
             break;
         case 'ds_announcement' :
             _announcement_block_form_process($edit);
@@ -246,10 +289,14 @@ function designssquare_com_theme_blocks_block_save($delta = '', $edit = array())
         case 'ds_blog_recent_posts_sidebar':
             _blog_recent_posts_block_form_process($edit);
             break;
+        case 'ds_testimonial':
+        case 'ds_testimonial_teaser':
+            _testimonial_block_form_process($edit);
+            break;
     }
 }
 
-
+//@ToDo figure out what this is for...should we remove?
 function designssquare_com_theme_blocks_form_alter(&$form, &$form_state, $form_id){
     module_load_include('inc', 'designssquare_com_theme_blocks','inc/block_form_api');
 
@@ -270,6 +317,12 @@ function designssquare_com_theme_blocks_form_alter(&$form, &$form_state, $form_i
             break;
         case 'block-designssquare-com-theme-blocks-ds-recent-tweets':
             $form[] = _recent_tweets_block_form();
+            break;
+        case 'block-designssquare-com-theme-blocks-ds-testimonial':
+            $form[] = _testimonial_block_form();
+            break;
+        case 'block-designssquare-com-theme-blocks-ds-contact-info':
+            $form[] = _contact_info_block_form();
             break;
     }
 }
@@ -326,12 +379,16 @@ function designssquare_com_theme_blocks_ds_block_context_alter(&$context, $block
     switch($block_id){
         case 'ds_social_sidebar':
         case 'ds_recent_tweets':
-        case 'ds_about_sidebar' :
+        case 'ds_about_teaser' :
         case 'ds_portfolio_sidebar':
         case 'ds_blog_recent_posts_sidebar':
         case 'ds_blog_categories':
         case 'ds_blog_archive':
             $context['classes_array'][] = 'widget';
+            break;
+        case 'ds_testimonial':
+//            $context['classes_array'][] = 'span4';
+//            $context['classes_array'][] = 'about';
             break;
     }
 }
