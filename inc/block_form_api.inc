@@ -884,12 +884,27 @@ function _testimonial_block_form_process($form_state)
 function _testimonial_block_feed($block_id)
 {
     $title = variable_get('ds_testimonial__content_block__title', '');
-    $reviewer1 = variable_get('ds_testimonial__content_block__reviewer1', '');
-    $review1 = variable_get('ds_testimonial__content_block__review1', '');
-    $reviewer2 = variable_get('ds_testimonial__content_block__reviewer2', '');
-    $review2 = variable_get('ds_testimonial__content_block__review2', '');
-    $reviewer3 = variable_get('ds_testimonial__content_block__reviewer3', '');
-    $review3 = variable_get('ds_testimonial__content_block__review3', '');
+    $reviews = array();
+    if ($review = variable_get('ds_testimonial__content_block__review1', false)) {
+        $reviews[] = array(
+            'reviewer' => variable_get('ds_testimonial__content_block__reviewer1', ''),
+            'review' => $review,
+        );
+    }
+
+    if ($review = variable_get('ds_testimonial__content_block__review2', false)) {
+        $reviews[] = array(
+            'reviewer' => variable_get('ds_testimonial__content_block__reviewer2', ''),
+            'review' => $review,
+        );
+    }
+
+    if ($review = variable_get('ds_testimonial__content_block__review3', false)) {
+        $reviews[] = array(
+            'reviewer' => variable_get('ds_testimonial__content_block__reviewer3', ''),
+            'review' => $review,
+        );
+    }
 
     module_load_include('module', 'contextual');
     $contextual_links = contextual_element_info();
@@ -897,17 +912,11 @@ function _testimonial_block_feed($block_id)
         'designssquare_com_theme_blocks' => array('designssquare-blocks', array('ds_testimonial')),
     );
 
-
     global $user;
     return array(
         'block_api' => array(
             'title' => $title,
-            'reviewer1' => $reviewer1,
-            'review1' => $review1,
-            'reviewer2' => $reviewer2,
-            'review2' => $review2,
-            'reviewer3' => $reviewer3,
-            'review3' => $review3,
+            'reviews' => $reviews,
             'contextual_links' => ($user->uid == 0) ? '' : $contextual_links['contextual_links']
         ),
         'context' => get_block_context($block_id),

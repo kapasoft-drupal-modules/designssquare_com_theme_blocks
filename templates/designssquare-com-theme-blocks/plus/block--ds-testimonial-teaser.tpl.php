@@ -5,24 +5,27 @@
             <h3><?php print $block_api['title']?></h3>
             <div class="sidebar">
                 <div class="testimonialrotator"  style="height: 240px;">
-                    <div class="testimonial" style="position: absolute; display: block;">
-                        <div class="main_testimonial">
-                            <div class="blockquote"><?php print $block_api['review1']?></div>
+                    <?php foreach($block_api['reviews'] as $key => $review) : ?>
+                        <div class="testimonial" style="position: absolute; display: block;">
+                            <div class="main_testimonial">
+                                <div class="blockquote"><?php print $review['review']?></div>
+                            </div>
+                            <div class="the-author"><?php print $review['reviewer']?></div>
                         </div>
-                        <div class="the-author"><?php print $block_api['reviewer1']?></div>
-                    </div>
-                    <div class="testimonial" style="display: none;">
-                        <div class="main_testimonial">
-                            <div class="blockquote"><?php print $block_api['review2']?></div>
-                        </div>
-                        <div class="the-author"><?php print $block_api['reviewer2']?></div>
-                    </div>
-                    <div class="testimonial" style="display: none;">
-                        <div class="main_testimonial">
-                            <div class="blockquote"><?php print $block_api['review3']?></div>
-                        </div>
-                        <div class="the-author"><?php print $block_api['reviewer3']?></div>
-                    </div>
+                    <?php endforeach;?>
+
+<!--                    <div class="testimonial" style="display: none;">-->
+<!--                        <div class="main_testimonial">-->
+<!--                            <div class="blockquote">--><?php //print $block_api['review2']?><!--</div>-->
+<!--                        </div>-->
+<!--                        <div class="the-author">--><?php //print $block_api['reviewer2']?><!--</div>-->
+<!--                    </div>-->
+<!--                    <div class="testimonial" style="display: none;">-->
+<!--                        <div class="main_testimonial">-->
+<!--                            <div class="blockquote">--><?php //print $block_api['review3']?><!--</div>-->
+<!--                        </div>-->
+<!--                        <div class="the-author">--><?php //print $block_api['reviewer3']?><!--</div>-->
+<!--                    </div>-->
                 </div>
             </div>
         </div>
