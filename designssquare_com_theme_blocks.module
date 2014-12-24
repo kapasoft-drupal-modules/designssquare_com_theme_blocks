@@ -55,6 +55,10 @@ function designssquare_com_theme_blocks_block_info()
         'info' => t('DesignsSquare Theme: Block: Testimonial'), //admin ui block name
         'properties' => array('administrative' => TRUE),
     );
+    $blocks['ds_powered_by'] = array(
+        'info' => t('DesignsSquare Theme: Block: Powered By'), //admin ui block name
+        'properties' => array('administrative' => TRUE),
+    );
     $blocks['ds_portfolio'] = array(
         'info' => t('DesignsSquare Theme: Block: Portfolio'), //admin ui block name
         'properties' => array('administrative' => TRUE),
@@ -83,6 +87,11 @@ function designssquare_com_theme_blocks_block_info()
     );
     $blocks['ds_blog_recent_posts_sidebar'] = array(
         'info' => t('DesignsSquare Theme: Block: Recent Posts - Sidebar'), //admin ui block name
+        'properties' => array('administrative' => TRUE),
+//        'cache' => DRUPAL_NO_CACHE,
+    );
+    $blocks['ds_blog_recent_comments_sidebar'] = array(
+        'info' => t('DesignsSquare Theme: Block: Recent Comments - Sidebar'), //admin ui block name
         'properties' => array('administrative' => TRUE),
 //        'cache' => DRUPAL_NO_CACHE,
     );
@@ -126,6 +135,7 @@ function designssquare_com_theme_blocks_block_view($delta = '')
         case 'ds_copy_rights':
         case 'ds_announcement':
         case 'ds_testimonial':
+        case 'ds_powered_by':
         case 'ds_portfolio':
         case 'ds_services':
         case 'ds_gallery':
@@ -138,6 +148,7 @@ function designssquare_com_theme_blocks_block_view($delta = '')
         case 'ds_blog_archive':
         case 'ds_portfolio_sidebar':
         case 'ds_blog_recent_posts_sidebar':
+        case 'ds_blog_recent_comments_sidebar':
             $block['subject'] = t('');
             $block['content'] = build_basic_block($delta);
             break;
@@ -171,6 +182,9 @@ function build_basic_block($delta)
         case 'ds_testimonial':
             $template_name = 'basic/block--ds-testimonial';
             break;
+        case 'ds_powered_by':
+            $template_name = 'basic/block--ds-powered-by';
+            break;
         case 'ds_portfolio':
             $template_name = 'basic/block--ds-portfolio';
             break;
@@ -193,6 +207,9 @@ function build_basic_block($delta)
         case 'ds_blog_recent_posts_sidebar':
             $template_name = 'basic/block--ds-recent-posts-sidebar';
             break;
+        case 'ds_blog_recent_comments_sidebar':
+            $template_name = 'basic/block--ds-recent-comments-sidebar';
+            break;
         case 'ds_about_sidebar':
             $template_name = 'basic/block--ds-about-sidebar';
             break;
@@ -206,7 +223,7 @@ function build_basic_block($delta)
             $template_name = 'basic/block--ds-blog-archive';
             break;
         case 'ds_slider_rev_full':
-            $vars = array();
+            $vars = get_content_from_cache();
             module_load_include('module', 'designssquare_lib');
             $options = array(//settings for slider
                 'type' => 'full',
@@ -228,7 +245,7 @@ function build_basic_block($delta)
             $template_name = 'basic/block--ds-slider-rev-full';
             break;
         case 'ds_slider_rev_banner':
-            $vars = array();
+            $vars = get_content_from_cache();
             module_load_include('module', 'designssquare_lib');
             $options = array(//settings for slider
                 'type' => 'banner',

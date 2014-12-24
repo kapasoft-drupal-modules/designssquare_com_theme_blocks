@@ -1,4 +1,4 @@
-<div class="" style="<?php print $slider_tapi["style"]; ?>">
+<div class="" style="<?php print $slider_tapi["style"];?>">
     <div class="<?php print $slider_tapi['outer']; ?>">
         <div class="<?php print $slider_tapi['inner']; ?>">
             <ul>
@@ -23,7 +23,7 @@
                 ?>
                 <li data-transition="random" data-slotamount="7" data-masterspeed="300">
 
-                    <img src="sites/default/files/designssquare_com_theme_builder/images/gallery/retro_stripe1.png">
+                    <img src="/sites/default/files/ds_theme_blocks/images/gallery/retro_stripe1.png">
 
                     <div class="tp-caption lfb"
                          data-x="460"
@@ -31,7 +31,7 @@
                          data-speed="1500"
                          data-start="500"
                          data-easing="easeInOutElastic"><img
-                            src="sites/default/files/designssquare_com_theme_builder/images/gallery/ipad1.png"
+                            src="/sites/default/files/ds_theme_blocks/images/gallery/ipad1.png"
                             alt="Image 1"></div>
 
                     <div class="tp-caption lfb"
@@ -40,7 +40,7 @@
                          data-speed="1500"
                          data-start="1000"
                          data-easing="easeInOutElastic"><img
-                            src="sites/default/files/designssquare_com_theme_builder/images/gallery/ipad21.png"
+                            src="/sites/default/files/ds_theme_blocks/images/gallery/ipad21.png"
                             alt="Image 2"></div>
 
                     <div class="tp-caption very_large_text lfl"
@@ -72,7 +72,7 @@
                     </div>
                 </li>
                 <li data-transition="random" data-slotamount="7" data-masterspeed="300">
-                    <img src="sites/default/files/designssquare_com_theme_builder/images/gallery/retro_stripe1.png">
+                    <img src="/sites/default/files/ds_theme_blocks/images/gallery/retro_stripe1.png">
 
                     <div class="tp-caption lfl"
                          data-x="-45"
@@ -80,7 +80,7 @@
                          data-speed="2500"
                          data-start="1000"
                          data-easing="easeOutElastic"><img
-                            src="sites/default/files/designssquare_com_theme_builder/images/gallery/box-blur.png"
+                            src="/sites/default/files/ds_theme_blocks/images/gallery/box-blur.png"
                             alt="Image 6"></div>
 
                     <div class="tp-caption lfl"
@@ -89,7 +89,7 @@
                          data-speed="2500"
                          data-start="500"
                          data-easing="easeInOutElastic"><img
-                            src="sites/default/files/designssquare_com_theme_builder/images/gallery/box-normal.png"
+                            src="/sites/default/files/ds_theme_blocks/images/gallery/box-normal.png"
                             alt="Image 7"></div>
 
                     <div class="tp-caption very_large_text fade"
@@ -135,11 +135,11 @@
                          data-speed="300"
                          data-start="2500"
                          data-easing="easeOutExpo">
-                        <img src="sites/default/files/designssquare_com_theme_builder/images/gallery/45.png"
+                        <img src="/sites/default/files/ds_theme_blocks/images/gallery/45.png"
                              alt="Image 7"></div>
                 </li>
                 <li data-transition="random" data-slotamount="7" data-masterspeed="300">
-                    <img src="sites/default/files/designssquare_com_theme_builder/images/gallery/retro_stripe1.png">
+                    <img src="/sites/default/files/ds_theme_blocks/images/gallery/retro_stripe1.png">
 
                     <div class="tp-caption fade"
                          data-x="0"
@@ -147,7 +147,7 @@
                          data-speed="300"
                          data-start="500"
                          data-easing="easeOutExpo"><img
-                            src="sites/default/files/designssquare_com_theme_builder/images/gallery/hand-black2.png"
+                            src="/sites/default/files/ds_theme_blocks/images/gallery/hand-black2.png"
                             alt="Image 2"></div>
 
                     <div class="tp-caption fade"
