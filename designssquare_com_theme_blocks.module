@@ -13,7 +13,12 @@ function designssquare_com_theme_blocks_preprocess_block(&$vars, $hook){
         case 'block-designssquare-com-theme-blocks-ds-blog-archive':
         case 'block-designssquare-com-theme-blocks-ds-portfolio-sidebar':
         case 'block-designssquare-com-theme-blocks-ds-announcement':
-            $vars['theme_hook_suggestions'][] = 'block__no_wrap';
+        case 'block-designssquare-com-theme-blocks-ds-slider-rev-full':
+        case 'block-designssquare-com-theme-blocks-ds-testimonial':
+        case 'block-designssquare-com-theme-blocks-ds-powered-by':
+        case 'block-designssquare-com-theme-blocks-ds-shop-cart':
+        case 'block-designssquare-com-theme-blocks-ds-shop-teaser':
+        $vars['theme_hook_suggestions'][] = 'block__no_wrap';
             break;
     }
 }
@@ -120,6 +125,21 @@ function designssquare_com_theme_blocks_block_info()
         'properties' => array('administrative' => TRUE),
 //        'cache' => DRUPAL_NO_CACHE,
     );
+    $blocks['ds_shop_cart'] = array(
+        'info' => t('DesignsSquare Theme: Block: Shopping Cart'), //admin ui block name
+        'properties' => array('administrative' => TRUE),
+//        'cache' => DRUPAL_NO_CACHE,
+    );
+    $blocks['ds_shop_teaser'] = array(
+        'info' => t('DesignsSquare Theme: Block: Shop Teaser'), //admin ui block name
+        'properties' => array('administrative' => TRUE),
+//        'cache' => DRUPAL_NO_CACHE,
+    );
+    $blocks['ds_shop_display'] = array(
+        'info' => t('DesignsSquare Theme: Block: Shop Display'), //admin ui block name
+        'properties' => array('administrative' => TRUE),
+//        'cache' => DRUPAL_NO_CACHE,
+    );
     return $blocks;
 }
 
@@ -149,6 +169,9 @@ function designssquare_com_theme_blocks_block_view($delta = '')
         case 'ds_portfolio_sidebar':
         case 'ds_blog_recent_posts_sidebar':
         case 'ds_blog_recent_comments_sidebar':
+        case 'ds_shop_cart':
+        case 'ds_shop_display':
+        case 'ds_shop_teaser':
             $block['subject'] = t('');
             $block['content'] = build_basic_block($delta);
             break;
@@ -268,6 +291,15 @@ function build_basic_block($delta)
             $block_config = $vars;
             $template_name = 'basic/block--ds-slider-rev-banner';
             break;
+        case 'ds_shop_cart':
+            $template_name = 'basic/block--ds-shop-cart';
+            break;
+        case 'ds_shop_teaser':
+            $template_name = 'basic/block--ds-shop-teaser';
+            break;
+        case 'ds_shop_display':
+            $template_name = 'basic/block--ds-shop-display';
+            break;
     }
 
     if(isset($template_name)){
@@ -278,7 +310,6 @@ function build_basic_block($delta)
 
 function config_ds_blog_recent_posts(){
     $block_tapi = array();
-
 
     drupal_alter('ds_blog_recent_posts', $block_tapi);
     return array(
