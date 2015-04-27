@@ -5,20 +5,25 @@ define('DS_TARGET_MODULE', 'designssquare_com_theme_blocks');
 function designssquare_com_theme_blocks_preprocess_block(&$vars, $hook){
     switch($vars['block_html_id']){
         case 'block-designssquare-com-theme-blocks-ds-blog-recent-posts':
+        case 'block-designssquare-com-theme-blocks-ds-blog-recent-posts-sidebar':
         case 'block-designssquare-com-theme-blocks-ds-about':
         case 'block-designssquare-com-theme-blocks-ds-recent-tweets':
         case 'block-designssquare-com-theme-blocks-ds-about-sidebar':
         case 'block-designssquare-com-theme-blocks-ds-social':
         case 'block-designssquare-com-theme-blocks-ds-blog-categories':
+        case 'block-designssquare-com-theme-blocks-ds-blog-tags':
         case 'block-designssquare-com-theme-blocks-ds-blog-archive':
         case 'block-designssquare-com-theme-blocks-ds-portfolio-sidebar':
         case 'block-designssquare-com-theme-blocks-ds-announcement':
         case 'block-designssquare-com-theme-blocks-ds-slider-rev-full':
+        case 'block-designssquare-com-theme-blocks-ds-slider-flex-full':
+        case 'block-designssquare-com-theme-blocks-ds-contact-info':
         case 'block-designssquare-com-theme-blocks-ds-testimonial':
         case 'block-designssquare-com-theme-blocks-ds-powered-by':
         case 'block-designssquare-com-theme-blocks-ds-shop-cart':
         case 'block-designssquare-com-theme-blocks-ds-shop-teaser':
-        $vars['theme_hook_suggestions'][] = 'block__no_wrap';
+        case 'block-designssquare-com-theme-blocks-ds-copy-rights':
+    $vars['theme_hook_suggestions'][] = 'block__no_wrap_ds';
             break;
     }
 }
@@ -105,6 +110,11 @@ function designssquare_com_theme_blocks_block_info()
         'properties' => array('administrative' => TRUE),
 //        'cache' => DRUPAL_NO_CACHE,
     );
+    $blocks['ds_blog_tags'] = array(
+        'info' => t('DesignsSquare Theme: Block: Blog Tags'), //admin ui block name
+        'properties' => array('administrative' => TRUE),
+//        'cache' => DRUPAL_NO_CACHE,
+    );
     $blocks['ds_blog_archive'] = array(
         'info' => t('DesignsSquare Theme: Block: Blog Archive'), //admin ui block name
         'properties' => array('administrative' => TRUE),
@@ -124,6 +134,10 @@ function designssquare_com_theme_blocks_block_info()
         'info' => t('DesignsSquare Theme: Block: Rev Slider Full'), //admin ui block name
         'properties' => array('administrative' => TRUE),
 //        'cache' => DRUPAL_NO_CACHE,
+    );
+    $blocks['ds_slider_flex_full'] = array(
+        'info' => t('DesignsSquare Theme: Block: Flex Slider Full'), //admin ui block name
+        'properties' => array('administrative' => TRUE),
     );
     $blocks['ds_shop_cart'] = array(
         'info' => t('DesignsSquare Theme: Block: Shopping Cart'), //admin ui block name
@@ -151,6 +165,7 @@ function designssquare_com_theme_blocks_block_view($delta = '')
         case 'ds_about':
         case 'ds_slider_rev_banner':
         case 'ds_slider_rev_full':
+        case 'ds_slider_flex_full':
         case 'ds_contact_info':
         case 'ds_copy_rights':
         case 'ds_announcement':
@@ -165,6 +180,7 @@ function designssquare_com_theme_blocks_block_view($delta = '')
         case 'ds_social':
         case 'ds_welcome':
         case 'ds_blog_categories':
+        case 'ds_blog_tags':
         case 'ds_blog_archive':
         case 'ds_portfolio_sidebar':
         case 'ds_blog_recent_posts_sidebar':
@@ -242,8 +258,26 @@ function build_basic_block($delta)
         case 'ds_blog_categories':
             $template_name = 'basic/block--ds-blog-categories';
             break;
+        case 'ds_blog_tags':
+            $template_name = 'basic/block--ds-blog-tags';
+            break;
         case 'ds_blog_archive':
             $template_name = 'basic/block--ds-blog-archive';
+            break;
+        case 'ds_slider_flex_full':
+//            $vars = get_content_from_cache();
+//            module_load_include('module', 'designssquare_lib');
+//            $options = array(//settings for slider
+//                'slider_id' => 'flex-smartbox',
+//                'num_items_slide' => 4,
+//                'nav_left_top' => '50%',
+//                'nav_left_offset' => 0,
+//                'nav_right_top' => '50%',
+//                'nav_right_offset' => 0,
+//            );
+//            $vars['slider_flex_tapi']  = import_flex_slider($options);
+//            $block_config = $vars;
+            $template_name = 'basic/block--ds-slider-flex-full';
             break;
         case 'ds_slider_rev_full':
             $vars = get_content_from_cache();
@@ -303,7 +337,7 @@ function build_basic_block($delta)
     }
 
     if(isset($template_name)){
-        $output .= theme_render_template(get_template_path(DS_TARGET_MODULE, '/blocks/'.$template_name) . '/blocks/'.$template_name.'.tpl.php',$block_config);
+        $output .= theme_render_template(get_template_path(DS_TARGET_MODULE, '/designssquare-com-theme-blocks/'.$template_name) . '/designssquare-com-theme-blocks/'.$template_name.'.tpl.php',$block_config);
     }
     return $output;
 }

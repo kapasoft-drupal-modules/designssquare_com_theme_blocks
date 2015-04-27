@@ -148,7 +148,7 @@
         <h2>Shared Blocks For Reuse Across Different Themes</h2>
         <hr>
         <ul>
-            <li>Last Updated: May 6, 2014</li>
+            <li>Last Updated: April 26, 2015</li>
             <li>Themed By: DesignsSquare.com</li>
             <li><a href="">
             </a>
@@ -189,7 +189,10 @@
     <section id="menus">
         <h3>Override Templates</h3>
         <hr>
-        <p>Each block has the template file. By adding template file with the exact name in the themes folder, it will override the origin block template file. If you like to override template file in Custome module than use hook_NAME_OF_THE_TEMPLATE_FILE_alter() as folowing</p>
+        <p>Each block has the template file. By adding template file with the exact name in the themes folder 'THEME_NAME/templates/designssquare-com-theme-blocks/basic',
+            it will override the origin block template file</p>
+
+        <p>If you like to override template file in custom module than use hook_NAME_OF_THE_TEMPLATE_FILE_alter() as folowing</p>
 
         <code>
             function MODULE-NAME_block__ds_announcement_alter(&$path_to_template){
@@ -197,14 +200,13 @@
             }
         </code>
 
-        <p>Here, the template named - 'block__ds_announcement' for block 'Annoucement' is overriden</p>
-
+        <p>Here, the template named - 'block__ds_announcement' for block 'Announcement' is overriden</p>
 
     </section>
     <section id="theme_settings">
-        <h3>About Block Plus</h3>
+        <h3>About Block</h3>
         <hr>
-        <p>Block Plus flows into templates two access points - block_api and context. The 'context' can be modified via hook_ds_block_context() as following:</p>
+        <p>Block flows into templates two access points - block_api and context. The 'context' can be modified via hook_ds_block_context() as following:</p>
        <code>
            function designssquare_com_site_church_ds_block_context_alter(&$context, $block_id){
             switch($block_id){
@@ -266,13 +268,19 @@
     <section id="releases">
         <h3>Release History</h3>
         <hr>
-        <h5>Release 0.2</h5>
+        <h5>Release 0.0.2</h5>
         <ul>@toDo
         </ul>
-        <h5>Release 0.5</h5>
+        <h5>Release 0.0.5</h5>
         <ul>
             <li>Added 3 Blocks - Shopping Cart, Shop Display, Shop Teaser of Shop / Ecomerce </li>
             <li>Refactor No-Wraps templates for blocks</li>
+        </ul>
+        <h5>Release 0.0.7</h5>
+        <ul>
+            <li>refactored block template path to templates/designssquare-com-theme-blocks/basic </li>
+            <li>fix bug to ensure all blocks renter block-no-wrap template</li>
+            <li>add block 'Blog Tags' and 'Flex Slider Full'</li>
         </ul>
     </section>
 </div>
